@@ -1,0 +1,24 @@
+name: Automated Web Server Health Check
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows you to trigger this manually with a single click
+
+jobs:
+  monitor-service:
+    runs-size: ubuntu-latest
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Pull down your repository code onto the runner machine
+    - name: Checkout Repository Code
+      uses: actions/checkout@v4
+
+    # Step 2: Change file permissions to make the bash script executable
+    - name: Grant Execute Permissions to Script
+      run: chmod +x uptime_check.sh
+
+    # Step 3: Execute the script and watch the outputs
+    - name: Run Diagnostics Script
+      run: ./uptime_check.sh
